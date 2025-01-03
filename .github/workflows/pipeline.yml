@@ -1,0 +1,37 @@
+name: Build Development Environment
+
+on:
+  push:
+    branches:
+      - main  # Trigger when code is pushed to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu environment for the job
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2  # This checks out your repository code
+      
+      # Step 2: Set up Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2  # Allows Docker to be used in the Actions workflow
+
+      # Step 3: Build a Docker image from the Dockerfile in your repository
+      - name: Build DBT Docker image
+        run: |
+          docker build -t my-dbt-image ./dbt  # Builds a Docker image for DBT from the dbt/Dockerfile
+
+      # Step 4: Run Docker Compose (if you want to spin up services like a database)
+      - name: Start Docker Compose services (optional)
+        run: |
+          docker-compose -f docker-compose.yml up -d  # Starts services like DB, Grafana, etc.
+
+      # Step 5: Run DBT models (it uses the built image to run DBT operations)
+      - name: Run DBT models
+        run: |
+          docker run --rm my-dbt-image dbt run  # Runs DBT models after the image is built
