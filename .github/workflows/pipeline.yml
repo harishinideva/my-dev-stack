@@ -16,9 +16,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build DBT Docker image
+      jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
         run: |
-          docker build -t my-dbt-image ./dbt
+          docker build -t my-dbt-image -f dbt/Dockerfile .
 
       - name: Start Docker Compose services
         run: |
