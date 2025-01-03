@@ -6,10 +6,12 @@ WORKDIR /app
 
 # Copy the requirements file and install DBT
 COPY requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt  # Install dependencies
+RUN pip install -r /app/requirements.txt
+
 
 # Copy DBT project files into the container
-COPY . /app
+COPY dbt/requirements.txt /app/requirements.txt
+
 
 # Set environment variable for DBT profiles (optional)
 ENV DBT_PROFILES_DIR=/app/profiles
