@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: timescale/timescaledb:latest-pg12
+    container_name: timescale-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: Postgres  # Password for the Postgres DB
+
+  dbt:
+    build: ./dbt  # Build from the Dockerfile in the dbt folder
+    container_name: dbt
+    depends_on:
+      - db  # DBT depends on the db service to be running
+    environment:
+      DBT_PROFILES_DIR: /app/profiles  # Specify the location for DBT profiles
+
+
