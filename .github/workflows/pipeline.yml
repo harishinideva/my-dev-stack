@@ -1,41 +1,35 @@
-name: CI/CD Pipeline
+name: Dev Environment Pipeline
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
-  build_and_test:
+  setup-dev-environment:
+    name: Setup Dev Environment
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    # Step 1: Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+    # Step 2: Set up Docker
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
 
-    - name: Cache Docker layers
-      uses: actions/cache@v2
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-
-
-    - name: Build Docker Images
+    # Step 3: Build and Start Services
+    - name: Start Services with Docker Compose
       run: |
-        docker-compose -f docker-compose.yml up --build -d
+        docker-compose up -d
+        docker ps
 
-    - name: Run DBT Tests
+    # Step 4: Verify Services are Running
+    - name: Verify Running Services
       run: |
-        docker-compose exec dbt dbt run
-
-    - name: Push Docker Images (optional)
-      run: |
-        docker push <your-docker-repo>/my-dev-stack
-
-
+        docker logs timescaledb
+        docker logs minio

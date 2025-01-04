@@ -1,10 +1,30 @@
-my_project:
-  target: dev
-  outputs:
-    dev:
-      type: postgres
-      host: timescale
-      user: myuser
-      password: mypass
-      dbname: jobsdb
-      schema: public
+ version: '3.8'
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    container_name: timescaledb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_pass
+      POSTGRES_DB: dev_db
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    command: server /data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    volumes:
+      - minio_data:/data
+
+volumes:
+  timescale_data:
+  minio_data:

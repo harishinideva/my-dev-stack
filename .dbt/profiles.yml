@@ -1,0 +1,11 @@
+default:
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: username
+      password: password
+      dbname: database
+      schema: public
+      threads: 4
+  target: dev
