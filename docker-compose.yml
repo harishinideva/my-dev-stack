@@ -1,4 +1,4 @@
- version: '3.8'
+version: '3.8'
 services:
   timescaledb:
     image: timescale/timescaledb:latest-pg14
@@ -28,3 +28,4 @@ services:
 volumes:
   timescale_data:
   minio_data:
+
