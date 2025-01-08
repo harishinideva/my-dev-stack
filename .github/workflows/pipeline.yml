@@ -22,20 +22,38 @@ jobs:
     - name: Set up Docker
       uses: docker/setup-buildx-action@v2
 
-    # Step 3: Set up Docker Compose (ensure it's installed)
-    - name: Set up Docker Compose
+    # Step 3: Install Docker Compose
+    - name: Install Docker Compose
       run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose
+        sudo curl -L "https://github.com/docker/compose/releases/download/v2.30.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version  # Verify installation
 
     # Step 4: Start Services with Docker Compose
     - name: Start Services with Docker Compose
       run: |
         docker-compose up -d
-        docker ps
+        docker ps  # List running containers
 
     # Step 5: Verify Running Services
     - name: Verify Running Services
       run: |
-        docker logs timescaledb
-        docker logs minio
+        docker logs timescaledb  # Logs for timescaledb container
+        docker logs minio         # Logs for minio container
+
+    # Step 6: Create charts folder and subfolders
+    - name: Create charts folder structure
+      run: |
+        mkdir -p charts/keycloak charts/grafana charts/minio charts/argo
+        touch charts/.keep
+
+    # Step 7: Commit and push charts folder
+    - name: Commit and Push charts folder
+      run: |
+        git config --global user.name "harishini"
+        git config --global user.email "devaharishini@gmail.com"
+        git add charts/
+        git commit -m "Add charts folder structure"
+        git push origin main
+      continue-on-error: true
+
