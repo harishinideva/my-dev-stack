@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: job_transformation
+    description: "Transformed job dataset with cleaned salaries"
+    tests:
+      - dbt_utils.not_null:
+          column_name: salary
+      - dbt_utils.unique:
+          column_name: title

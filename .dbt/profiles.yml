@@ -1,11 +1,19 @@
-default:
+
+my_project:
+  target: dev
   outputs:
     dev:
       type: postgres
-      host: localhost
-      user: username
-      password: password
-      dbname: database
+      host: timescale   # Service name as per docker-compose.yml
+      user: postgres
+      password: mypassword
+      dbname: jobsdb
       schema: public
-      threads: 4
-  target: dev
+      port: 5434
+
+
+
+
+
+
+
