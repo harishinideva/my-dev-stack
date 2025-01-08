@@ -39,3 +39,11 @@ jobs:
       run: |
         docker logs timescaledb
         docker logs minio
+    # Step 6: Add charts folder to GitHub
+    - name: Add charts folder to GitHub
+      run: |
+        git config --global user.name "harishini"
+        git config --global user.email "devaharishini@gmail.com"
+        git add charts/
+        git commit -m "Add charts folder"
+        git push origin main
