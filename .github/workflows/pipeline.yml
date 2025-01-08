@@ -38,6 +38,7 @@ jobs:
     # Step 5: Verify Running Services
     - name: Verify Running Services
       run: |
+<<<<<<< HEAD
         docker logs timescaledb  # Logs for timescaledb container
         docker logs minio         # Logs for minio container
 
@@ -57,3 +58,8 @@ jobs:
         git push origin main
       continue-on-error: true
 
+=======
+        docker logs timescaledb
+        docker logs minio
+   
+>>>>>>> 1837d6bd0bdd137f0fa911f44608d2a6112a56b3
