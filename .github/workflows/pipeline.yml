@@ -51,7 +51,7 @@ jobs:
     - name: Commit and Push charts folder
       run: |
         git config --global user.name "harishini"
-        git config --global user.email "devaharishini@gmail.com"
+        git config --global user.email "harishinikp@gmail.com"
         git add charts/
         git commit -m "Add charts folder structure"
         git push origin main
