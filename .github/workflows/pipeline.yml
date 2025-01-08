@@ -41,15 +41,15 @@ jobs:
         docker logs minio
     # Step 6: Add charts folder to GitHub
     - name: Create charts folder if it doesn't exist
-  run: |
-    mkdir -p charts
+      run: |
+        mkdir -p charts
 
-     - name: Commit and push charts folder to GitHub
-  run: |
-    git config --global user.name "harishini"
-    git config --global user.email "devaharishini@gmail.com"
-    git add charts/
-    git commit -m "Add charts folder"
-    git push origin main
+   - name: Commit and push charts folder to GitHub
+     run: |
+       git config --global user.name "harishini"
+       git config --global user.email "devaharishini@gmail.com"
+       git add charts/
+       git commit -m "Add charts folder"
+       git push origin main
 
 
